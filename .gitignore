@@ -1,0 +1,15 @@
+# Dependency Directory
+node_modules
+jspm_packages
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+.DS_Store
+
+# Logs
+logs
+*.log
+npm-debug.log*

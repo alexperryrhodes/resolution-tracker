@@ -1,10 +1,11 @@
 // Import required packages
 import mongoose from 'mongoose';
 
+// Establish variables
+const URL = process.env.ATLAS_URL
+
 // Establish connection string to MondoDB server
-mongoose.connect(
-    'mongodb+srv://dbUser:vJZYlRpOLCy112TY@cluster0.8ju03uf.mongodb.net/?retryWrites=true&w=majority',
-    { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Connect to to the database
 const db = mongoose.connection;

@@ -30,3 +30,11 @@ const deleteResolution = async (resolutionID) => {
     const result = await Resolution.deleteOne({resolutionID: resolutionID});
     return result.deletedCount;
 };
+
+// Define read resolution function 
+const readResolution = async (filter, projection, limit) => {
+    const query = Resolution.find(filer).select(projection).limit(limit);
+    return query.exec();
+};
+
+export { createResolution, updateResolution, deleteResolution, readResolution};

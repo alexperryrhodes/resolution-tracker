@@ -15,10 +15,18 @@ const Record = mongoose.model("Record", recordSchema);
 const createRecord = async (resolutionID, date) => {
     const record = new Record({resolutionID:resolutionID, date: date});
     return record.save();
-}
+};
 
 // Define delete record function
 const deleteRecord = async (recordID) => {
     const result = await Record.deleteOne({recordID : recordID});
     return result.deletedCount;
-}
+};
+
+// Define read record function 
+const readRecord = async (filter, projection, limit) => {
+    const query = Record.find(filter).select(projection).limit(limit);
+    return query.exec();
+};
+
+export { createRecord, deleteRecord, readRecord};

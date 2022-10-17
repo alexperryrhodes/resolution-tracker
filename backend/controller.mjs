@@ -2,8 +2,8 @@
 import express from 'express';
 
 // Import models
-import * as record from 'models/record_model.mjs';
-import * as resolution from 'models/resolution_model.mjs';
+import * as record from './models/record_model.mjs';
+import * as resolution from './models/resolution_model.mjs';
 
 // Establish variables
 const app = express();
@@ -16,6 +16,19 @@ app.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`);
 });
 
+// Get records
+app.get('/records', (req, res) => {
+    let filter = {}
+    record.readRecord(filter, '', 0)
+    .then(record => {
+        res.status(200).send(record);
+    })
+    .catch(error => {
+        console.error(error);
+        res.status(500).json({Error: 'Request Failed'});
+    })
+});
+
 // Create a new record
 app.post('/records', (req, res) => {
     record.createRecord(req.body.recordID, req.body.date)
@@ -24,6 +37,6 @@ app.post('/records', (req, res) => {
     })
     .catch(error => {
         console.error(error);
-        res.status(500).json({Error: 'Request Failed'})
+        res.status(500).json({Error: 'Request Failed'});
     })
 });

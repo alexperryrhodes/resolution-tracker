@@ -7,7 +7,7 @@ dotenv.config()
 const URL = process.env.ATLAS_URL
 
 // Establish connection string to MondoDB server
-mongoose.connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(URL, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Connect to to the database
 const db = mongoose.connection;
@@ -16,4 +16,3 @@ const db = mongoose.connection;
 db.once('open', () => {
     console.log('Successfully connected to MongoDB using Mongoose!');
 });
-

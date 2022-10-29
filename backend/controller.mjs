@@ -1,9 +1,10 @@
 // Import required packages
 import express from 'express';
+import * as connect from './connection.mjs'
 
 // Import models
-import * as record from './models/record_model.mjs';
-import * as resolution from './models/resolution_model.mjs';
+//import * as record from './models/record_model.mjs';
+import * as resolution from './models/model.mjs';
 
 // Establish variables
 const app = express();
@@ -16,12 +17,12 @@ app.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`);
 });
 
-// Get records
-app.get('/records', (req, res) => {
+// Get resolutions
+app.get('/resolutions', (req, res) => {
     let filter = {}
-    record.readRecord(filter, '', 0)
-    .then(record => {
-        res.status(200).send(record);
+    resolution.readResolution(filter, '', 0)
+    .then(resolution => {
+        res.status(200).send(resolution);
     })
     .catch(error => {
         console.error(error);
@@ -29,11 +30,23 @@ app.get('/records', (req, res) => {
     })
 });
 
-// Create a new record
-app.post('/records', (req, res) => {
-    record.createRecord(req.body.recordID, req.body.date)
-    .then(record => {
-        res.status.json(record);
+// Create a new resolutions
+app.post('/resolutions', (req, res) => {
+    resolution.createResolution(req.body.name, req.body.goalCount, req.body.color)
+    .then(resolution => {
+        res.status(201).json(resolution);
+    })
+    .catch(error => {
+        console.error(error);
+        res.status(500).json({Error: 'Request Failed'});
+    })
+});
+
+// Add a new record
+app.put('/resolutions', (req, res) => {
+    resolution.addResolutionRecord(req.body.resolutionID, req.body.recordDate)
+    .then(resolution => {
+        res.status(201).json(resolution);
     })
     .catch(error => {
         console.error(error);

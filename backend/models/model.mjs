@@ -13,7 +13,6 @@ const resolutionSchema = mongoose.Schema({
 // Create resolution model
 const Resolution = mongoose.model("Resolution", resolutionSchema);
 
-
 // Define Create Resolution Function
 const createResolution = async (name, goalCount, color) => {
     const resolution = new Resolution({name: name, goalCount: goalCount, color: color, records: []});
@@ -28,20 +27,30 @@ const updateResolution = async (resolutionID, name, goalCount, color) => {
     return result.modifiedCount;
 };
 
-const addResolutionRecord = async (resolutionID, record) => {
+
+
+
+
+// Define update record function 
+const addResolutionRecord = async (resolutionID, recordDate) => {
     const result = await Resolution.updateOne(
         {resolutionID: resolutionID},
-        {$push: {record: record}});
+        {$push: {records: recordDate}});
     return result.modifiedCount;
 };
 
-const deleteResolutionRecord = async (resolutionID, record) => {
+
+
+
+
+
+// Define delete record function 
+const removeResolutionRecord = async (resolutionID, recordDate) => {
     const result = await Resolution.updateOne(
         {resolutionID: resolutionID},
-        {$pull: {record: record}});
+        {$pull: {records: recordDate}});
     return result.modifiedCount;
 };
-
 
 // Define delete resolution function
 const deleteResolution = async (resolutionID) => {
@@ -51,8 +60,8 @@ const deleteResolution = async (resolutionID) => {
 
 // Define read resolution function 
 const readResolution = async (filter, projection, limit) => {
-    const query = Resolution.find(filer).select(projection).limit(limit);
+    const query = Resolution.find(filter).select(projection).limit(limit);
     return query.exec();
 };
 
-export { createResolution, updateResolution, deleteResolution, readResolution};
+export { createResolution, updateResolution, addResolutionRecord, removeResolutionRecord, deleteResolution, readResolution};

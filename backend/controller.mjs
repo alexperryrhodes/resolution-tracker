@@ -42,14 +42,44 @@ app.post('/resolutions', (req, res) => {
     })
 });
 
-// Add a new record
-app.put('/resolutions', (req, res) => {
-    resolution.addResolutionRecord(req.body.resolutionID, req.body.recordDate)
-    .then(resolution => {
-        res.status(201).json(resolution);
+// Add a new record (date record of a resolution)
+app.put('/resolutions/:_id/records/', (req, res) => {
+    resolution.addResolutionRecord(req.params._id, req.body.recordDate)
+    .then(record => {
+        res.status(201).json(record);
     })
     .catch(error => {
         console.error(error);
         res.status(500).json({Error: 'Request Failed'});
     })
+});
+
+// Add a delete record (date record of a resolution)
+app.delete('/resolutions/:_id/records/', (req, res) => {
+    resolution.removeResolutionRecord(req.params._id, req.body.recordDate)
+    .then(record => {
+        res.status(201).json(record);
+    })
+    .catch(error => {
+        console.error(error);
+        res.status(500).json({Error: 'Request Failed'});
+    })
+});
+
+// Delete a resolution
+app.delete('/resolutions/:_id', (req, res) => {
+    resolution.deleteResolution(req.params._id)
+        .then(deletedCount => {
+            if (deletedCount === 1) {
+                res.status(204).send()
+            }
+            else {
+                res.status(500).json({Error: 'Value Not Deleted'})
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            res.status(500).json({Error: 'Request Failed'})
+        })
+        
 });

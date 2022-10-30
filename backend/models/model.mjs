@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 
 // Define resolution schema
 const resolutionSchema = mongoose.Schema({
-    //resolutionID: {type: Number, required: true},
     name: {type: String, required: true},
     goalCount: {type: Number, required: true},
     color: {type: String, required: true},
@@ -27,11 +26,7 @@ const updateResolution = async (resolutionID, name, goalCount, color) => {
     return result.modifiedCount;
 };
 
-
-
-
-
-// Define update record function 
+// Define update record function (date record of a resolution)
 const addResolutionRecord = async (resolutionID, recordDate) => {
     const result = await Resolution.updateOne(
         {resolutionID: resolutionID},
@@ -39,12 +34,7 @@ const addResolutionRecord = async (resolutionID, recordDate) => {
     return result.modifiedCount;
 };
 
-
-
-
-
-
-// Define delete record function 
+// Define delete record function (date record of a resolution)
 const removeResolutionRecord = async (resolutionID, recordDate) => {
     const result = await Resolution.updateOne(
         {resolutionID: resolutionID},

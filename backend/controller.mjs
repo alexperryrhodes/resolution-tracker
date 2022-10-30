@@ -46,10 +46,15 @@ app.post('/resolutions', (req, res) => {
 });
 
 // Update resolutions
-app.put('/resolutions/:_id/records/', (req, res) => {
+app.put('/resolutions/:_id', (req, res) => {
     resolution.updateResolution(req.params._id, req.body.name, req.body.goalCount, req.body.color)
-    .then(resolution => {
-        res.status(201).json(resolution);
+    .then(updatedCount => {
+        if (updatedCount === 1) {
+            res.status(204).send()
+        }
+        else {
+            res.status(500).json({Error: 'Resolution Not Updated'})
+        }
     })
     .catch(error => {
         console.error(error);
@@ -65,7 +70,7 @@ app.delete('/resolutions/:_id', (req, res) => {
                 res.status(204).send()
             }
             else {
-                res.status(500).json({Error: 'Value Not Deleted'})
+                res.status(500).json({Error: 'Resolution Not Deleted'})
             }
         })
         .catch(error => {
@@ -79,10 +84,15 @@ app.delete('/resolutions/:_id', (req, res) => {
 
 
 // Add a new record
-app.put('/resolutions/:_id/records/', (req, res) => {
+app.put('/resolutions/:_id/records/add', (req, res) => {
     resolution.addResolutionRecord(req.params._id, req.body.recordDate)
-    .then(record => {
-        res.status(201).json(record);
+    .then(addedCount => {
+        if (addedCount === 1) {
+            res.status(204).send()
+        }
+        else {
+            res.status(500).json({Error: 'Record Not Added'})
+        }
     })
     .catch(error => {
         console.error(error);
@@ -91,10 +101,15 @@ app.put('/resolutions/:_id/records/', (req, res) => {
 });
 
 // Remove a record
-app.delete('/resolutions/:_id/records/', (req, res) => {
+app.put('/resolutions/:_id/records/remove', (req, res) => {
     resolution.removeResolutionRecord(req.params._id, req.body.recordDate)
-    .then(record => {
-        res.status(201).json(record);
+    .then(removedCount => {
+        if (removedCount === 1) {
+            res.status(204).send()
+        }
+        else {
+            res.status(500).json({Error: 'Record Not Removed'})
+        }
     })
     .catch(error => {
         console.error(error);

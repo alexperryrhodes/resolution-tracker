@@ -12,6 +12,10 @@ const resolutionSchema = mongoose.Schema({
 // Create resolution model
 const Resolution = mongoose.model("Resolution", resolutionSchema);
 
+
+/*** Resolution Functions ***/
+
+
 // Define Create Resolution Function
 const createResolution = async (name, goalCount, color) => {
     const resolution = new Resolution({name: name, goalCount: goalCount, color: color, records: []});
@@ -26,22 +30,6 @@ const updateResolution = async (resolutionID, name, goalCount, color) => {
     return result.modifiedCount;
 };
 
-// Define update record function (date record of a resolution)
-const addResolutionRecord = async (resolutionID, recordDate) => {
-    const result = await Resolution.updateOne(
-        {resolutionID: resolutionID},
-        {$push: {records: recordDate}});
-    return result.modifiedCount;
-};
-
-// Define delete record function (date record of a resolution)
-const removeResolutionRecord = async (resolutionID, recordDate) => {
-    const result = await Resolution.updateOne(
-        {resolutionID: resolutionID},
-        {$pull: {records: recordDate}});
-    return result.modifiedCount;
-};
-
 // Define delete resolution function
 const deleteResolution = async (resolutionID) => {
     const result = await Resolution.deleteOne({resolutionID: resolutionID});
@@ -52,6 +40,26 @@ const deleteResolution = async (resolutionID) => {
 const readResolution = async (filter, projection, limit) => {
     const query = Resolution.find(filter).select(projection).limit(limit);
     return query.exec();
+};
+
+
+/*** Resolution Date Records Functions ***/
+
+
+// Define add record function
+const addResolutionRecord = async (resolutionID, recordDate) => {
+    const result = await Resolution.updateOne(
+        {resolutionID: resolutionID},
+        {$push: {records: recordDate}});
+    return result.modifiedCount;
+};
+
+// Define remove record function
+const removeResolutionRecord = async (resolutionID, recordDate) => {
+    const result = await Resolution.updateOne(
+        {resolutionID: resolutionID},
+        {$pull: {records: recordDate}});
+    return result.modifiedCount;
 };
 
 export { createResolution, updateResolution, addResolutionRecord, removeResolutionRecord, deleteResolution, readResolution};

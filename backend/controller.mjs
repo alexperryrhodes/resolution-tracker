@@ -3,7 +3,7 @@ import express from 'express';
 import * as connect from './connection.mjs'
 
 // Import models
-import * as resolution from './models/model.mjs';
+import * as resolution from './model.mjs';
 
 // Establish variables
 const app = express();

@@ -23,16 +23,16 @@ const createResolution = async (name, goalCount, color) => {
 };
 
 // Define update resolution function
-const updateResolution = async (resolutionID, name, goalCount, color) => {
+const updateResolution = async (_id, name, goalCount, color) => {
     const result = await Resolution.updateOne(
-        {resolutionID: resolutionID},
+        {_id: _id},
         {name: name, goalCount: goalCount, color: color});
     return result.modifiedCount;
 };
 
 // Define delete resolution function
-const deleteResolution = async (resolutionID) => {
-    const result = await Resolution.deleteOne({resolutionID: resolutionID});
+const deleteResolution = async (_id) => {
+    const result = await Resolution.deleteOne({_id: _id});
     return result.deletedCount;
 };
 
@@ -47,17 +47,17 @@ const readResolution = async (filter, projection, limit) => {
 
 
 // Define add record function
-const addResolutionRecord = async (resolutionID, recordDate) => {
+const addResolutionRecord = async (_id, recordDate) => {
     const result = await Resolution.updateOne(
-        {resolutionID: resolutionID},
+        {_id: _id},
         {$push: {records: recordDate}});
     return result.modifiedCount;
 };
 
 // Define remove record function
-const removeResolutionRecord = async (resolutionID, recordDate) => {
+const removeResolutionRecord = async (_id, recordDate) => {
     const result = await Resolution.updateOne(
-        {resolutionID: resolutionID},
+        {_id: _id},
         {$pull: {records: recordDate}});
     return result.modifiedCount;
 };

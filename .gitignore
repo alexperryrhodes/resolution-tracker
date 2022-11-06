@@ -16,3 +16,4 @@ npm-debug.log*
 
 .env
 *.rest
+.txt
